@@ -13,8 +13,7 @@
         android:layout_gravity="start"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        tools:text="name"
-        android:text="Product Name"/>
+        tools:text="name" />
 
     <TextView
         android:id="@+id/tvQuantity"
@@ -23,8 +22,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        tools:text="10"
-        android:text="Qty" />
+        tools:text="10" />
 
     <TextView
         android:id="@+id/tvPrice"
@@ -33,6 +31,5 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        tools:text="50"
-        android:text="$$$" />
+        tools:text="50" />
 </LinearLayout>
