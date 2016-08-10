@@ -2,16 +2,12 @@ package com.example.android.inventoryapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-/* Layout
-Default Textview
-When there is no information to display in the database, the layout displays a TextView with
-instructions on how to populate the database.
-*/
-
-/* Fuctionality
+/* Functionality
 Runtime Errors
 The code runs without errors
 
@@ -56,5 +52,10 @@ The intent of this project is to give you practice writing raw Java code using t
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Show "No Content Available" when listView is empty
+        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
+        lvProducts.setEmptyView(tvNoContent);
     }
 }
