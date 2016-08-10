@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 /* Functionality
@@ -49,14 +51,26 @@ entirely and sends the user back to the main activity.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get our Database object
+        ProductDatabaseHelper db_helper = new ProductDatabaseHelper(this);
+        SQLiteDatabase db = db_helper.getWritableDatabase();
+
+
         // Show "No Content Available" when listView is empty
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
         lvProducts.setEmptyView(tvNoContent);
 
-        // Get our Database object
-        ProductDatabaseHelper db_helper = new ProductDatabaseHelper(this);
-        SQLiteDatabase db = db_helper.getWritableDatabase();
+        // Create a product list >> listArray >> ArrayAdapter
+        ArrayList<Product> arrayOfProducts = new ArrayList<Product>();
 
+        // Todo: fake data for now
+        arrayOfProducts.add(new Product("Nexus 6", 1, 400, "Google", 0));
+        arrayOfProducts.add(new Product("Nexus 6p", 5, 600, "Google", 0));
+        arrayOfProducts.add(new Product("Nexus 5x", 5, 380, "Google", 0));
+        arrayOfProducts.add(new Product("Moto 360", 2, 275, "Google", 0));
+
+        ProductAdapter productAdapter = new ProductAdapter(this, arrayOfProducts);
+        lvProducts.setAdapter(productAdapter);
     }
 }
