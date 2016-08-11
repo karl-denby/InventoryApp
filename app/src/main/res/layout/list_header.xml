@@ -1,0 +1,34 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvProductNameHeader"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_gravity="start"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/product" />
+
+    <TextView
+        android:id="@+id/tvQuantityHeader"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/qty" />
+
+    <TextView
+        android:id="@+id/tvPriceHeader"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/dollar_sign" />
+</LinearLayout>

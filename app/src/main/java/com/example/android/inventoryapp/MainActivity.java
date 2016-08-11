@@ -3,6 +3,7 @@ package com.example.android.inventoryapp;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,8 +58,10 @@ entirely and sends the user back to the main activity.
 
 
         // Show "No Content Available" when listView is empty
+        View header = getLayoutInflater().inflate(R.layout.list_header, null);
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
+        lvProducts.addHeaderView(header);
         lvProducts.setEmptyView(tvNoContent);
 
         // Create a product list >> listArray >> ArrayAdapter

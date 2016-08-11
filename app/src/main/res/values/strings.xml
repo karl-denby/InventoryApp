@@ -6,4 +6,7 @@
     <string name="order">Order</string>
     <string name="delete">Delete</string>
     <string name="no_content_available">No Content Available</string>
+    <string name="product">Product</string>
+    <string name="qty">Qty</string>
+    <string name="dollar_sign">$</string>
 </resources>
