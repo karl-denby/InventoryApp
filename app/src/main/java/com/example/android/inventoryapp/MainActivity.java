@@ -1,10 +1,12 @@
 package com.example.android.inventoryapp;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Product>> {
+
+    private static final int SQL_LOADER = 0;
 
     // Loader lifecycle Events
     @Override
@@ -75,7 +79,7 @@ entirely and sends the user back to the main activity.
         // Get our Database object and loader
         ProductDatabaseHelper db_helper = new ProductDatabaseHelper(this);
         SQLiteDatabase db = db_helper.getWritableDatabase();
-        getSupportLoaderManager().initLoader(0, null, MainActivity.this).forceLoad();
+        getSupportLoaderManager().initLoader(SQL_LOADER, null, MainActivity.this).forceLoad();
 
         // Show "No Content Available" when listView is empty
         View header = getLayoutInflater().inflate(R.layout.list_header, null);
@@ -83,5 +87,28 @@ entirely and sends the user back to the main activity.
         TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
         lvProducts.addHeaderView(header);
         lvProducts.setEmptyView(tvNoContent);
+
+        // Setup listener for "Add Product"
+        /*
+            Add product button:
+            The Add product button prompts the user for information about the product and a picture, each of
+            which are then properly stored in the table.
+        */
+        Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
+        btnAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent add_product = new Intent(MainActivity.this, AddProductActivity.class);
+
+                startActivity(add_product);
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportLoaderManager().initLoader(SQL_LOADER, null, MainActivity.this).forceLoad();
+    }
+
 }

@@ -22,7 +22,7 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
         listOfProducts.add(new Product("Nexus 6", 1, 400, "Google", 0));
         listOfProducts.add(new Product("Nexus 6p", 5, 600, "Google", 0));
         listOfProducts.add(new Product("Nexus 5x", 5, 380, "Google", 0));
-        listOfProducts.add(new Product("Moto360", 2, 275, "Google", 0));
+        listOfProducts.add(new Product("Motorola 360", 2, 275, "Motorola", 0));
         listOfProducts.add(new Product("Nexus 5", 1, 275, "Google", 0));
         listOfProducts.add(new Product("iPhone 6s", 5, 600, "Apple", 0));
         listOfProducts.add(new Product("iPhone 5s", 5, 380, "Apple", 0));
