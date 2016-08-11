@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements android.support.v4.app.LoaderManager.LoaderCallbacks<List<Product>> {
+        implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
     // Loader lifecycle Events
     @Override
@@ -20,22 +20,13 @@ public class MainActivity extends AppCompatActivity
         return new ProductLoader(this);
     }
 
-    @Override public void onLoaderReset(Loader<List<Product>> param1) {
+    @Override public void onLoaderReset(Loader<ArrayList<Product>> param1) {
         // todo: something
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Product>> loader, List<Product> data) {
-        /**
-         * turn "List<Product> data" into "ArrayList<Product> arrayOfProduct"
-         * attach data to listView
-         */
-        ArrayList<Product> arrayOfProducts;
-        arrayOfProducts = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            arrayOfProducts.add(i, data.get(i));
-        }
-        ProductAdapter productAdapter = new ProductAdapter(this, arrayOfProducts);
+    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
+        ProductAdapter productAdapter = new ProductAdapter(this, data);
 
         // attach data to listView and tell it to refresh
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
@@ -92,15 +83,5 @@ entirely and sends the user back to the main activity.
         TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
         lvProducts.addHeaderView(header);
         lvProducts.setEmptyView(tvNoContent);
-
-
-        // Todo: fake data for now
-        //arrayOfProducts.add(new Product("Nexus 6", 1, 400, "Google", 0));
-        //arrayOfProducts.add(new Product("Nexus 6p", 5, 600, "Google", 0));
-        //arrayOfProducts.add(new Product("Nexus 5x", 5, 380, "Google", 0));
-        //arrayOfProducts.add(new Product("Moto 360", 2, 275, "Google", 0));
-
-        //ProductAdapter productAdapter = new ProductAdapter(this, arrayOfProducts);
-        //lvProducts.setAdapter(productAdapter);
     }
 }
