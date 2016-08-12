@@ -2,14 +2,17 @@ package com.example.android.inventoryapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddProductActivity extends AppCompatActivity {
 
     private int quantity = 1;
+    private final String TAG = "AddProductActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class AddProductActivity extends AppCompatActivity {
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddProductActivity.this, "Validating input", Toast.LENGTH_SHORT).show();
+                validateInput();
             }
         });
 
@@ -48,7 +51,6 @@ public class AddProductActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(AddProductActivity.this, "Minimum Quantity is 0", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -59,7 +61,31 @@ public class AddProductActivity extends AppCompatActivity {
                 tvQuantity.setText(Integer.toString(quantity));
             }
         });
-
-
     }
+
+        private void validateInput() {
+            EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
+            EditText edtPrice = (EditText) findViewById(R.id.edtPrice);
+            EditText edtSupplier = (EditText) findViewById(R.id.edtSupplier);
+
+            final String MESSAGE = "Please add ";
+            String missing_fields = "";
+
+            Log.v(TAG, edtProductName.getText().toString());
+            if (edtProductName.getText().length() == 0) { missing_fields += ", Product";}
+            Log.v(TAG, edtPrice.getText().toString());
+            if (edtPrice.getText().toString().length() == 0) { missing_fields += ", Price";}
+            Log.v(TAG, edtSupplier.getText().toString());
+            if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
+
+            if (missing_fields.length() != 0) {
+                // remove leading , and add a .
+                missing_fields = missing_fields.substring(1, missing_fields.length());
+                missing_fields += ".";
+                Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(AddProductActivity.this, "Good Input", Toast.LENGTH_SHORT).show();
+            }
+
+        }
 }

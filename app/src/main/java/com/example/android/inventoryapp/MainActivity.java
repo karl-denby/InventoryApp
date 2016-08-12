@@ -46,9 +46,6 @@ Add product button:
 The Add product button prompts the user for information about the product and a picture, each of
 which are then properly stored in the table.
 
-Input validation:
-User input is validated. In particular, empty product information is not accepted.
-
 Sale button:
 The sale button on each list item properly reduces the quantity available by one, unless that would
 result in a negative quantity.
@@ -89,11 +86,6 @@ entirely and sends the user back to the main activity.
         lvProducts.setEmptyView(tvNoContent);
 
         // Setup listener for "Add Product"
-        /*
-            Add product button:
-            The Add product button prompts the user for information about the product and a picture, each of
-            which are then properly stored in the table.
-        */
         Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
