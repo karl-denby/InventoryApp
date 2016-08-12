@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class AddProductActivity extends AppCompatActivity {
 
     private int quantity = 1;
@@ -40,14 +42,14 @@ public class AddProductActivity extends AppCompatActivity {
         Button btnPlusQuantity = (Button) findViewById(R.id.btnPlusQuantity);
 
         final TextView tvQuantity = (TextView) findViewById(R.id.tvQuantity);
-        tvQuantity.setText(Integer.toString(quantity));
+        tvQuantity.setText(String.format(Locale.ENGLISH, "%d", quantity));
 
         btnMinusQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (quantity > 0) {
                     quantity -= 1;
-                    tvQuantity.setText(Integer.toString(quantity));
+                    tvQuantity.setText(String.format(Locale.ENGLISH, "%d", quantity));
                 } else {
                     Toast.makeText(AddProductActivity.this, "Minimum Quantity is 0", Toast.LENGTH_SHORT).show();
                 }
@@ -58,7 +60,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 quantity += 1;
-                tvQuantity.setText(Integer.toString(quantity));
+                tvQuantity.setText(String.format(Locale.ENGLISH, "%d", quantity));
             }
         });
     }
@@ -79,7 +81,7 @@ public class AddProductActivity extends AppCompatActivity {
             if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
 
             if (missing_fields.length() != 0) {
-                // remove leading , and add a .
+                // remove leading , and add a . to list of missing input fields
                 missing_fields = missing_fields.substring(1, missing_fields.length());
                 missing_fields += ".";
                 Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
