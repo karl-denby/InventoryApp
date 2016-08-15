@@ -18,6 +18,9 @@
         <activity android:name=".AddProductActivity"
             android:label="Add Product">
         </activity>
+        <activity android:name=".ProductActivity"
+            android:label="Product Details">
+        </activity>
     </application>
 
 </manifest>

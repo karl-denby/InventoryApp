@@ -6,13 +6,12 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Product>> {
@@ -54,12 +53,6 @@ result in a negative quantity.
 Detail View intent:
 Clicking on the rest of each list item sends the user to the detail screen for the correct product.
 
-Modify quantity buttons:
-The modify quantity buttons in the detail view properly increase and decrease the quantity available
-for the correct product.
-
-The student may also add input for how much to increase or decrease the quantity by.
-
 Order Button:
 The ‘order more’ button sends an intent to either a phone app or an email app to contact the supplier
 using the information stored in the database.
@@ -96,6 +89,17 @@ entirely and sends the user back to the main activity.
                 startActivity(add_product);
             }
         });
+
+        // Clicking an list item brings you to ProductActivity/detail_layout
+        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent product_details = new Intent(MainActivity.this, ProductActivity.class);
+
+                startActivity(product_details);
+            }
+        });
+
     }
 
     @Override
