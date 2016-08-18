@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity
         implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
     private static final int SQL_LOADER = 0;
+    SQLiteDatabase db;
 
     // Loader lifecycle Events
     @Override
@@ -69,7 +70,7 @@ entirely and sends the user back to the main activity.
 
         // Get our Database object and loader
         ProductDatabaseHelper db_helper = new ProductDatabaseHelper(this);
-        SQLiteDatabase db = db_helper.getWritableDatabase();
+        db = db_helper.getWritableDatabase();
         getSupportLoaderManager().initLoader(SQL_LOADER, null, MainActivity.this).forceLoad();
 
         // Show "No Content Available" when listView is empty
