@@ -21,18 +21,9 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
         // Create a product list >> listArray >> ArrayAdapter
         ArrayList<Product> listOfProducts = new ArrayList<Product>() {};
 
-        // Todo: fake data for now
-        //listOfProducts.add(new Product("Nexus 6", 1, 400, "Google", 0));
-        listOfProducts.add(new Product("Nexus 6p", 5, 600, "Google", 0));
-        listOfProducts.add(new Product("Nexus 5x", 5, 380, "Google", 0));
-        listOfProducts.add(new Product("Motorola 360", 2, 275, "Motorola", 0));
-        listOfProducts.add(new Product("Nexus 5", 1, 275, "Google", 0));
-        listOfProducts.add(new Product("iPhone 6s", 5, 600, "Apple", 0));
-        listOfProducts.add(new Product("iPhone 5s", 5, 380, "Apple", 0));
-        listOfProducts.add(new Product("Apple Watch", 2, 500, "Apple", 0));
-
-        // Get additional row from database
+        // Get rows from database
         String[] projection = {
+                ProductDatabase.ProdEntry._ID,
                 ProductDatabase.ProdEntry.COLUMN_NAME,
                 ProductDatabase.ProdEntry.COLUMN_QUANTITY,
                 ProductDatabase.ProdEntry.COLUMN_PRICE,
@@ -43,6 +34,8 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
         // Get our Database object and loader
         ProductDatabaseHelper db_helper = new ProductDatabaseHelper(getContext());
         db = db_helper.getWritableDatabase();
+
+        // Read data from the DB and add it to listOfProducts
         Cursor c = db.query(
                 ProductDatabase.ProdEntry.TABLE_NAME,
                 projection,
@@ -52,14 +45,19 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
                 null,
                 ProductDatabase.ProdEntry._ID + " ASC"
         );
+
         c.moveToFirst();
-        listOfProducts.add(new Product(
-                c.getString(c.getColumnIndexOrThrow("name")),
-                c.getInt(c.getColumnIndexOrThrow("quantity")),
-                c.getInt(c.getColumnIndexOrThrow("price")),
-                c.getString(c.getColumnIndexOrThrow("supplier")),
-                c.getLong(c.getColumnIndexOrThrow("image_resource"))
-        ));
+        for (int i = 0; i < c.getCount(); i++) {
+            listOfProducts.add(new Product(
+                    c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("name")),
+                    c.getInt(c.getColumnIndexOrThrow("quantity")),
+                    c.getInt(c.getColumnIndexOrThrow("price")),
+                    c.getString(c.getColumnIndexOrThrow("supplier")),
+                    c.getLong(c.getColumnIndexOrThrow("image_resource"))
+            ));
+            c.moveToNext();
+        }
 
         return listOfProducts;
     }

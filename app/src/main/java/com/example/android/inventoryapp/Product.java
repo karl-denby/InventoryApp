@@ -1,20 +1,23 @@
 package com.example.android.inventoryapp;
 
 public class Product {
+    private int mId;
     private String mName;
     private int mQuantity;
     private int mPrice;
     private String mSupplier;
     private long mImageResource;
 
-    public Product (String name, int quantity, int price, String supplier) {
+    public Product (int Id, String name, int quantity, int price, String supplier) {
+        mId = Id;
         mName = name;
         mQuantity = quantity;
         mPrice = price;
         mSupplier = supplier;
     }
 
-    public Product (String name, int quantity, int price, String supplier, long imageResource) {
+    public Product (int Id, String name, int quantity, int price, String supplier, long imageResource) {
+        mId = Id;
         mName = name;
         mQuantity = quantity;
         mPrice = price;

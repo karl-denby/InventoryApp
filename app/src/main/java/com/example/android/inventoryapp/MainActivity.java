@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 /* Functionality
-ListView Population:
-The listView populates with the current products stored in the table.
-
 Add product button:
 The Add product button prompts the user for information about the product and a picture, each of
 which are then properly stored in the table.

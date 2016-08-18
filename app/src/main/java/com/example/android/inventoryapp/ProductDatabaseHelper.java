@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 2;  // increment the version if scheme changes
+    public static final int DATABASE_VERSION = 4;  // increment the version if scheme changes
     // 1 = first creation
     // 2 = insert 1 record
+    // 3 = rest of initial data set
+    // 4 = pull id for later use
 
     public static final String DATABASE_NAME = "Products.db";
 
@@ -43,21 +45,66 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void defaultData(SQLiteDatabase db) {
-        /*
-        listOfProducts.add(new Product("Nexus 6p", 5, 600, "Google", 0));
-        listOfProducts.add(new Product("Nexus 5x", 5, 380, "Google", 0));
-        listOfProducts.add(new Product("Motorola 360", 2, 275, "Motorola", 0));
-        listOfProducts.add(new Product("Nexus 5", 1, 275, "Google", 0));
-        listOfProducts.add(new Product("iPhone 6s", 5, 600, "Apple", 0));
-        listOfProducts.add(new Product("iPhone 5s", 5, 380, "Apple", 0));
-        listOfProducts.add(new Product("Apple Watch", 2, 500, "Apple", 0));
-        */
         ContentValues values = new ContentValues();
         values.put(ProductDatabase.ProdEntry._ID, 1);
         values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Nexus 6p");
-        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 2);
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 5);
         values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 600);
-        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "bob@buy.google.nexus.local");
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "eric@buy.google.nexus.local");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 2);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Nexus 5x");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 5);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 380);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "eric@buy.google.nexus.local");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 3);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Motorola 360");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 2);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 275);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "mike@get.moto.local");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 4);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Nexus 5");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 1);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 275);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "eric@buy.google.nexus.local");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 5);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "iPhone 6s");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 5);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 600);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "tim@mo.money.than.sense.com");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 6);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "iPhone 5s");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 5);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 380);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "nick@high.price.refurb.com");
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, 7);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Apple Watch");
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, 2);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, 500);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, "tim@mo.money.than.sense.com");
         values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, 0);
         db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
     }
