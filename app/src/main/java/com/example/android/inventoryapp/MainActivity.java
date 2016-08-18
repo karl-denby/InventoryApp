@@ -54,10 +54,6 @@ Clicking on the rest of each list item sends the user to the detail screen for t
 Order Button:
 The ‘order more’ button sends an intent to either a phone app or an email app to contact the supplier
 using the information stored in the database.
-
-Delete button:
-The delete button prompts the user for confirmation and, if confirmed, deletes the product record
-entirely and sends the user back to the main activity.
 */
 
     @Override
