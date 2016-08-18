@@ -29,6 +29,8 @@ public class Product {
         mImageResource = imageResource;
     }
 
+    public int getId() {return mId;}
+
     public String getName() {return mName;}
 
     public int getQuantity() {return mQuantity;}

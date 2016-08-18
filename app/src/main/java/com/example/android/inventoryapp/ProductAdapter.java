@@ -34,6 +34,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         tvQuantity.setText(String.valueOf(product.getQuantity()));
         tvPrice.setText(String.valueOf(product.getPrice()));
 
+        // Put _id into tag so its easy to find later
+        convertView.setTag(product.getId());
+
         // Return the completed view to render on screen
         return convertView;
     }

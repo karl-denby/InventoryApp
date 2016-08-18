@@ -72,7 +72,7 @@ entirely and sends the user back to the main activity.
 
         // Show "No Content Available" when listView is empty
         View header = getLayoutInflater().inflate(R.layout.list_header, null);
-        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        final ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         TextView tvNoContent = (TextView) findViewById(R.id.tvNoContent);
         lvProducts.addHeaderView(header);
         lvProducts.setEmptyView(tvNoContent);
@@ -93,6 +93,9 @@ entirely and sends the user back to the main activity.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent product_details = new Intent(MainActivity.this, ProductActivity.class);
+
+                int id = ((int) view.getTag());
+                product_details.putExtra("_id", id);
 
                 startActivity(product_details);
             }

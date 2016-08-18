@@ -24,6 +24,11 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            int value = extras.getInt("_id");
+            Toast.makeText(getApplicationContext(), "Product _id is " + value, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void areYouSure() {
