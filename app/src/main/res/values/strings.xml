@@ -16,4 +16,8 @@
     <string name="price">Price</string>
     <string name="supplier">Supplier</string>
     <string name="_1">1</string>
+    <string name="sell">Sell</string>
+    <string name="detail_quantity_is">Quantity: </string>
+    <string name="detail_price_is">Price: </string>
+    <string name="detail_product_name_is">Product name: </string>
 </resources>
