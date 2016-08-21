@@ -52,17 +52,14 @@ public class ProductActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Product _id is " + _id, Toast.LENGTH_SHORT).show();
 
             // Load Data for the provided id
-            Product prod = getProductDetails(db, _id);
-
             TextView detail_product_name = (TextView) findViewById(R.id.detail_product_name);
-            detail_product_name.setText(getString(R.string.detail_product_name_is) + prod.getName());
-
             TextView detail_product_qty = (TextView) findViewById(R.id.detail_product_qty);
-            detail_product_qty.setText(getString(R.string.detail_quantity_is) + prod.getQuantity());
-
             TextView detail_product_price = (TextView) findViewById(R.id.detail_product_price);
-            detail_product_price.setText(getString(R.string.detail_price_is) + prod.getPrice());
 
+            Product prod = getProductDetails(db, _id);
+            detail_product_name.setText(getString(R.string.detail_product_name_is, prod.getName()));
+            detail_product_qty.setText(getString(R.string.detail_quantity_is, prod.getQuantity()));
+            detail_product_price.setText(getString(R.string.detail_price_is, prod.getPrice()));
         }
         db.close();
     }

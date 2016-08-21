@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">Inventory App</string>
     <string name="add_product">Add Product</string>
     <string name="plus">+</string>
@@ -17,7 +17,8 @@
     <string name="supplier">Supplier</string>
     <string name="_1">1</string>
     <string name="sell">Sell</string>
-    <string name="detail_quantity_is">Quantity: </string>
-    <string name="detail_price_is">Price: </string>
-    <string name="detail_product_name_is">Product name: </string>
+
+    <string name="detail_quantity_is">Quantity: <xliff:g id="quantity" example="9">%s</xliff:g></string>
+    <string name="detail_price_is">Price: <xliff:g id="price" example="123">%s</xliff:g></string>
+    <string name="detail_product_name_is">Product name: <xliff:g id="name" example="Nexus 7">%s</xliff:g></string>
 </resources>
