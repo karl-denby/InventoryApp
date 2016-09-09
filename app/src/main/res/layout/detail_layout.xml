@@ -7,8 +7,6 @@
         Detail layout
         *The detail layout contains buttons to modify the current quantity either by tracking a sale or by
         receiving a shipment.
-        *The detail layout contains a button to order from the supplier.
-        *The detail view contains a button to delete the product record entirely.
     -->
     <TextView
         android:layout_height="wrap_content"
@@ -48,6 +46,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/sell"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/received"/>
 
     <Button
         android:id="@+id/btnDetailOrder"
