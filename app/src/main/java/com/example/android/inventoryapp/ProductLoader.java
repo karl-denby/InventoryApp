@@ -59,6 +59,7 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
             c.moveToNext();
         }
 
+        db.close();
         return listOfProducts;
     }
 

@@ -5,10 +5,17 @@
     android:layout_height="match_parent">
     <!--
         Detail layout
-        *The detail layout contains buttons to modify the current quantity either by
-         * tracking a sale or by
-         * receiving a shipment.
+        *The detail layout contains buttons to modify the current quantity either by tracking a sale or by
+        receiving a shipment.
+        *The detail layout contains a button to order from the supplier.
+        *The detail view contains a button to delete the product record entirely.
     -->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/detail_product_name_is"
+        android:id="@+id/detail_product_name"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,23 +23,23 @@
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/detailBtnMinus"
+        <TextView
+            android:id="@+id/detail_product_qty"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/minus"/>
+            android:text="@string/detail_quantity_is"/>
 
-        <Button
-            android:id="@+id/detailBtnPlus"
+        <TextView
+            android:id="@+id/detail_product_price"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/plus"/>
+            android:text="@string/detail_price_is"/>
 
     </LinearLayout>
 
