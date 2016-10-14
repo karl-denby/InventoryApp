@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,24 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 areYouSureDelete();
+            }
+        });
+
+        Button btnOrder = (Button) findViewById(R.id.btnDetailOrder);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] toEmails = {""};
+                toEmails[0] = getProductDetails(db, _id).getSupplier();
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, toEmails);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Ordering: " + getProductDetails(db, _id).getName());
+                intent.putExtra(Intent.EXTRA_TEXT, "Hi " + getProductDetails(db, _id).getSupplier() + ". I would like to order ...");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
 
