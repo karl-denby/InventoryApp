@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
     <!--
         Detail layout
-        *The detail layout contains buttons to modify the current quantity either by tracking a sale or by
-        receiving a shipment.
+        *The detail layout contains buttons to modify the current quantity either by tracking a
+         sale or by receiving a shipment.
         *The detail layout contains a button to order from the supplier.
         *The detail view contains a button to delete the product record entirely.
     -->

@@ -44,18 +44,13 @@ Add product button:
 The Add product button prompts the user for information about the product and a picture, each of
 which are then properly stored in the table.
 
-
-
 Sale button:
 The sale button on each list item properly reduces the quantity available by one, unless that would
 result in a negative quantity.
 
     Detail View intent:
-    Clicking on the rest of each list item sends the user to the detail screen for the correct product.
-
-Order Button:
-The ‘order more’ button sends an intent to either a phone app or an email app to contact the supplier
-using the information stored in the database.
+    Clicking on the rest of each list item sends the user to the detail screen for the correct
+    product.
 */
 
     @Override

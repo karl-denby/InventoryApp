@@ -35,6 +35,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validateInput();
+                dataInsert();
             }
         });
 
@@ -65,29 +66,31 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-        private void validateInput() {
-            EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
-            EditText edtPrice = (EditText) findViewById(R.id.edtPrice);
-            EditText edtSupplier = (EditText) findViewById(R.id.edtSupplier);
+    private void validateInput() {
+        EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
+        EditText edtPrice = (EditText) findViewById(R.id.edtPrice);
+        EditText edtSupplier = (EditText) findViewById(R.id.edtSupplier);
 
-            final String MESSAGE = "Please add ";
-            String missing_fields = "";
+        final String MESSAGE = "Please add ";
+        String missing_fields = "";
 
-            Log.v(TAG, edtProductName.getText().toString());
-            if (edtProductName.getText().length() == 0) { missing_fields += ", Product";}
-            Log.v(TAG, edtPrice.getText().toString());
-            if (edtPrice.getText().toString().length() == 0) { missing_fields += ", Price";}
-            Log.v(TAG, edtSupplier.getText().toString());
-            if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
+        Log.v(TAG, edtProductName.getText().toString());
+        if (edtProductName.getText().length() == 0) { missing_fields += ", Product";}
+        Log.v(TAG, edtPrice.getText().toString());
+        if (edtPrice.getText().toString().length() == 0) { missing_fields += ", Price";}
+        Log.v(TAG, edtSupplier.getText().toString());
+        if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
 
-            if (missing_fields.length() != 0) {
-                // remove leading , and add a . to list of missing input fields
-                missing_fields = missing_fields.substring(1, missing_fields.length());
-                missing_fields += ".";
-                Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(AddProductActivity.this, "Good Input", Toast.LENGTH_SHORT).show();
-            }
-
+        if (missing_fields.length() != 0) {
+            // remove leading , and add a . to list of missing input fields
+            missing_fields = missing_fields.substring(1, missing_fields.length());
+            missing_fields += ".";
+            Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void dataInsert() {
+        Toast.makeText(AddProductActivity.this, "Insert Data", Toast.LENGTH_SHORT).show();
+    }
+
 }
