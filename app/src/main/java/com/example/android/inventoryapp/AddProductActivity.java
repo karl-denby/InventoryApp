@@ -1,5 +1,8 @@
 package com.example.android.inventoryapp;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +18,16 @@ public class AddProductActivity extends AppCompatActivity {
 
     private int quantity = 1;
     private final String TAG = "AddProductActivity";
+    SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product);
+
+        ProductDatabaseHelper db_helper = new ProductDatabaseHelper(getApplicationContext());
+        db = db_helper.getWritableDatabase();
 
         Button btnAddImage = (Button) findViewById(R.id.btnAddImage);
         Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
@@ -90,7 +98,53 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void dataInsert() {
-        Toast.makeText(AddProductActivity.this, "Insert Data", Toast.LENGTH_SHORT).show();
+        EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
+        TextView tvProductQuantity = (TextView) findViewById(R.id.tvQuantity);
+        EditText edtPrice = (EditText) findViewById(R.id.edtPrice);
+        EditText edtSupplier = (EditText) findViewById(R.id.edtSupplier);
+
+        int _id = nextFreeNumber();
+        String productName = edtProductName.getText().toString();
+        String productQuantity = tvProductQuantity.getText().toString();
+        String productPrice = edtPrice.getText().toString();
+        String productSupplier = edtSupplier.getText().toString();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(ProductDatabase.ProdEntry._ID, _id);
+        values.put(ProductDatabase.ProdEntry.COLUMN_NAME, productName);
+        values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, productQuantity);
+        values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, productPrice);
+        values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, productSupplier);
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+
+        Toast.makeText(AddProductActivity.this, "Added row " + newRowId, Toast.LENGTH_SHORT).show();
     }
 
+    private int nextFreeNumber() {
+        // Get rows from database
+        String[] projection = {
+                ProductDatabase.ProdEntry._ID,
+        };
+
+        Cursor c = db.query(
+                ProductDatabase.ProdEntry.TABLE_NAME,
+                projection, //columns
+                null, //selection
+                null, //selectionArgs
+                null, //groupBy
+                null, //having
+                ProductDatabase.ProdEntry._ID + " DESC"
+        );
+
+        // We only want one result
+        c.moveToFirst();
+        int _id = c.getInt(c.getColumnIndexOrThrow("_id"));
+        c.close();
+
+        // highest value we found incremented by 1
+        return _id + 1;
+    }
 }
