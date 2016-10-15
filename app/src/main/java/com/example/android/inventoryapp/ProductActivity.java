@@ -1,5 +1,6 @@
 package com.example.android.inventoryapp;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -39,11 +40,32 @@ public class ProductActivity extends AppCompatActivity {
         ProductDatabaseHelper db_helper = new ProductDatabaseHelper(getApplicationContext());
         db = db_helper.getWritableDatabase();
 
-        Button btnDelete = (Button) findViewById(R.id.btnDetailDelete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        Button btnSell = (Button) findViewById(R.id.btnDetailSell);
+        btnSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                areYouSureDelete();
+                _id = getProductDetails(db, _id).getId();
+                int new_qty = getProductDetails(db, _id).getQuantity() - 1;
+
+                // New value for one column
+                ContentValues values = new ContentValues();
+                values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, new_qty);
+
+                // Which row to update, based on the title
+                String selection = ProductDatabase.ProdEntry._ID + " = ?";
+                String[] selectionArgs = { String.valueOf(_id) };
+
+                if (new_qty >= 0) {
+                    int count = db.update(
+                            ProductDatabase.ProdEntry.TABLE_NAME,
+                            values,
+                            selection,
+                            selectionArgs);
+                    db.close();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "None in stock", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -62,6 +84,14 @@ public class ProductActivity extends AppCompatActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
+            }
+        });
+
+        Button btnDelete = (Button) findViewById(R.id.btnDetailDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                areYouSureDelete();
             }
         });
 

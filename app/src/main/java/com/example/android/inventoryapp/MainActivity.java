@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity
 
 /* Functionality
 Add product button:
-The Add product button prompts the user for information about the product and a picture, each of
-which are then properly stored in the table.
+uploads image?
+    The Add product button prompts the user for information about the product and a picture, each of
+    which are then properly stored in the table.
 
-Sale button:
-The sale button on each list item properly reduces the quantity available by one, unless that would
-result in a negative quantity.
+    Sale button:
+    The sale button on each list item properly reduces the quantity available by one, unless that would
+    result in a negative quantity.
 
     Detail View intent:
     Clicking on the rest of each list item sends the user to the detail screen for the correct
