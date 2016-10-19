@@ -137,7 +137,7 @@ public class ProductActivity extends AppCompatActivity {
                     c.getInt(c.getColumnIndexOrThrow("quantity")),
                     c.getInt(c.getColumnIndexOrThrow("price")),
                     c.getString(c.getColumnIndexOrThrow("supplier")),
-                    c.getLong(c.getColumnIndexOrThrow("image_resource"))
+                    c.getString(c.getColumnIndexOrThrow("image_location"))
             ));
         c.close();
         return prod;

@@ -16,7 +16,7 @@ public final class ProductDatabase {
         public static final String COLUMN_QUANTITY = "quantity";
         public static final String COLUMN_PRICE = "price";
         public static final String COLUMN_SUPPLIER ="supplier";
-        public static final String COLUMN_IMAGE ="image_resource";
+        public static final String COLUMN_IMAGE ="image_location";
     }
 }
 

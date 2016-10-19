@@ -6,7 +6,7 @@ public class Product {
     private int mQuantity;
     private int mPrice;
     private String mSupplier;
-    private long mImageResource;
+    private String mImageLocation;
 
     public Product (int Id, String name, int quantity, int price, String supplier) {
         mId = Id;
@@ -16,17 +16,17 @@ public class Product {
         mSupplier = supplier;
     }
 
-    public Product (int Id, String name, int quantity, int price, String supplier, long imageResource) {
+    public Product (int Id, String name, int quantity, int price, String supplier, String imageLocation) {
         mId = Id;
         mName = name;
         mQuantity = quantity;
         mPrice = price;
         mSupplier = supplier;
-        mImageResource = imageResource;
+        mImageLocation = imageLocation;
     }
 
-    public void setImageResource(long imageResource) {
-        mImageResource = imageResource;
+    public void setImageLocation(String imageLocation) {
+        mImageLocation = imageLocation;
     }
 
     public int getId() {return mId;}
@@ -39,5 +39,5 @@ public class Product {
 
     public String getSupplier() {return mSupplier;}
 
-    public long getImageResource() {return mImageResource;}
+    public String getImageResource() {return mImageLocation;}
 }

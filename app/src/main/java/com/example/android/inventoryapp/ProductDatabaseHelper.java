@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 4;  // increment the version if scheme changes
+    public static final int DATABASE_VERSION = 5;  // increment the version if scheme changes
     // 1 = first creation
     // 2 = insert 1 record
     // 3 = rest of initial data set
