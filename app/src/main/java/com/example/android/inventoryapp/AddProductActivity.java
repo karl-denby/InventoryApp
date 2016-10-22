@@ -1,14 +1,17 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +19,11 @@ import java.util.Locale;
 
 public class AddProductActivity extends AppCompatActivity {
 
+    static final int REQUEST_IMAGE_OPEN = 1;
     private int quantity = 1;
     private final String TAG = "AddProductActivity";
     SQLiteDatabase db;
-
+    String productImage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AddProductActivity.this, "Add an Image", Toast.LENGTH_SHORT).show();
+                selectImage();
             }
         });
 
@@ -97,6 +102,25 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, REQUEST_IMAGE_OPEN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_OPEN && resultCode == RESULT_OK) {
+            Uri fullPhotoUri = data.getData();
+
+            ImageView ivSelectedFile = (ImageView) findViewById(R.id.ivProductImage);
+            ivSelectedFile.setImageURI(fullPhotoUri);
+            productImage = fullPhotoUri.toString();
+            Log.v("Image URI is: ", "" + productImage);
+        }
+    }
+
     private void dataInsert() {
         EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
         TextView tvProductQuantity = (TextView) findViewById(R.id.tvQuantity);
@@ -116,6 +140,7 @@ public class AddProductActivity extends AppCompatActivity {
         values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, productQuantity);
         values.put(ProductDatabase.ProdEntry.COLUMN_PRICE, productPrice);
         values.put(ProductDatabase.ProdEntry.COLUMN_SUPPLIER, productSupplier);
+        values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, productImage);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);

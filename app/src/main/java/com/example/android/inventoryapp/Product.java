@@ -39,5 +39,5 @@ public class Product {
 
     public String getSupplier() {return mSupplier;}
 
-    public String getImageResource() {return mImageLocation;}
+    public String getImageLocation() {return mImageLocation;}
 }

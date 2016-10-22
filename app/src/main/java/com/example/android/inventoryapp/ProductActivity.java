@@ -5,14 +5,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.net.URI;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -69,6 +75,31 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
+        Button btnReceived = (Button) findViewById(R.id.btnDetailReceived);
+        btnReceived.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _id = getProductDetails(db, _id).getId();
+                int new_qty = getProductDetails(db, _id).getQuantity() + 1;
+
+                // New value for one column
+                ContentValues values = new ContentValues();
+                values.put(ProductDatabase.ProdEntry.COLUMN_QUANTITY, new_qty);
+
+                // Which row to update, based on the title
+                String selection = ProductDatabase.ProdEntry._ID + " = ?";
+                String[] selectionArgs = { String.valueOf(_id) };
+
+                int count = db.update(
+                        ProductDatabase.ProdEntry.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+                db.close();
+                finish();
+            }
+        });
+
         Button btnOrder = (Button) findViewById(R.id.btnDetailOrder);
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +132,23 @@ public class ProductActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Product _id is " + _id, Toast.LENGTH_SHORT).show();
 
             // Load Data for the provided id
+            ImageView detail_product_image = (ImageView) findViewById(R.id.ivProductImage);
             TextView detail_product_name = (TextView) findViewById(R.id.detail_product_name);
             TextView detail_product_qty = (TextView) findViewById(R.id.detail_product_qty);
             TextView detail_product_price = (TextView) findViewById(R.id.detail_product_price);
 
             Product prod = getProductDetails(db, _id);
+            String loc = "content://com.android.providers.media.documents/document/image:19";
+            Uri locUri = Uri.parse(loc);
+
+            try {
+                Log.v("Location", "" + locUri);
+                detail_product_image.setImageURI(null);
+                detail_product_image.setImageURI(Uri.parse(loc));
+            } catch (Exception e) {
+                Log.e("Error", e.toString());
+            }
+
             detail_product_name.setText(getString(R.string.detail_product_name_is, prod.getName()));
             detail_product_qty.setText(getString(R.string.detail_quantity_is, prod.getQuantity()));
             detail_product_price.setText(getString(R.string.detail_price_is, prod.getPrice()));
