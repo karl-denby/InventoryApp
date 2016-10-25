@@ -3,18 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--
-        Detail layout
-<<<<<<< HEAD
-        *The detail layout contains buttons to modify the current quantity either by tracking a
-         sale or by receiving a shipment.
-        *The detail layout contains a button to order from the supplier.
-        *The detail view contains a button to delete the product record entirely.
-=======
-        *The detail layout contains buttons to modify the current quantity either by tracking a sale or by
-        receiving a shipment.
->>>>>>> 19531db4c314ead86eb09c3d3049073f367a4b1c
-    -->
+
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
