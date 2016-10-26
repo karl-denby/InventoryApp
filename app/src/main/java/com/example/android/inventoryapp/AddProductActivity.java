@@ -4,9 +4,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 public class AddProductActivity extends AppCompatActivity {
@@ -115,10 +120,22 @@ public class AddProductActivity extends AppCompatActivity {
             Uri fullPhotoUri = data.getData();
 
             ImageView ivSelectedFile = (ImageView) findViewById(R.id.ivProductImage);
-            ivSelectedFile.setImageURI(fullPhotoUri);
-            productImage = fullPhotoUri.toString();
-            Log.v("Image URI is: ", "" + productImage);
+
+            try {
+                Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fullPhotoUri);
+                productImage = encodeBmpToBase64(bmp, Bitmap.CompressFormat.JPEG, 100);
+                Log.v("Length of Original BMP", "" + productImage.length());
+            } catch (Exception e) {
+                Log.v("Problem with BMP", "" + e.toString());
+            }
+            Bitmap bmp = decodeBmpFromBase64(productImage);
+            ivSelectedFile.setImageBitmap(bmp);
         }
+    }
+
+    private static Bitmap decodeBmpFromBase64(String input) {
+        byte[] decodedBytes = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
     private void dataInsert() {
@@ -146,6 +163,12 @@ public class AddProductActivity extends AppCompatActivity {
         long newRowId = db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
 
         Toast.makeText(AddProductActivity.this, "Added row " + newRowId, Toast.LENGTH_SHORT).show();
+    }
+
+    private static String encodeBmpToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
 
     private int nextFreeNumber() {

@@ -5,11 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -132,21 +135,24 @@ public class ProductActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Product _id is " + _id, Toast.LENGTH_SHORT).show();
 
             // Load Data for the provided id
-            ImageView detail_product_image = (ImageView) findViewById(R.id.ivProductImage);
+            ImageView detail_product_image = (ImageView) findViewById(R.id.detail_product_image);
             TextView detail_product_name = (TextView) findViewById(R.id.detail_product_name);
             TextView detail_product_qty = (TextView) findViewById(R.id.detail_product_qty);
             TextView detail_product_price = (TextView) findViewById(R.id.detail_product_price);
 
             Product prod = getProductDetails(db, _id);
-            String loc = "content://com.android.providers.media.documents/document/image:19";
-            Uri locUri = Uri.parse(loc);
 
+            String encodedBmp = prod.getImageLocation();
+            Log.v("Length of Stored BMP", "" + encodedBmp.length());
             try {
-                Log.v("Location", "" + locUri);
-                detail_product_image.setImageURI(null);
-                detail_product_image.setImageURI(Uri.parse(loc));
+                Log.v("String >> BMP", "");
+                Bitmap bmp = decodeBmpFromBase64(encodedBmp);
+                Log.v("BMP height is: ", "" + bmp.getHeight());
+                if (bmp != null) {
+                    detail_product_image.setImageBitmap(bmp);
+                }
             } catch (Exception e) {
-                Log.e("Error", e.toString());
+                Log.v("Image Exception", "" + e.toString());
             }
 
             detail_product_name.setText(getString(R.string.detail_product_name_is, prod.getName()));
@@ -154,6 +160,11 @@ public class ProductActivity extends AppCompatActivity {
             detail_product_price.setText(getString(R.string.detail_price_is, prod.getPrice()));
         }
         db.close();
+    }
+
+    private static Bitmap decodeBmpFromBase64(String input) {
+        byte[] decodedBytes = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
     private void areYouSureDelete() {
