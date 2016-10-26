@@ -1,6 +1,7 @@
 package com.example.android.inventoryapp;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -8,14 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-public class ProductAdapter extends ArrayAdapter<Product> {
+class ProductAdapter extends ArrayAdapter<Product> {
 
     public ProductAdapter(Context context, ArrayList<Product> Products) {
         super(context, 0, Products);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public @NonNull View getView(int position, View convertView,@NonNull ViewGroup parent) {
         // Get the data item for this position
         Product product = getItem(position);
 

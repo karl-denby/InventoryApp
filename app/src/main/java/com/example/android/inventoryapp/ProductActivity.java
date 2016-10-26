@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,9 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.net.URI;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -65,7 +61,7 @@ public class ProductActivity extends AppCompatActivity {
                 String[] selectionArgs = { String.valueOf(_id) };
 
                 if (new_qty >= 0) {
-                    int count = db.update(
+                    db.update(
                             ProductDatabase.ProdEntry.TABLE_NAME,
                             values,
                             selection,
@@ -93,7 +89,7 @@ public class ProductActivity extends AppCompatActivity {
                 String selection = ProductDatabase.ProdEntry._ID + " = ?";
                 String[] selectionArgs = { String.valueOf(_id) };
 
-                int count = db.update(
+                db.update(
                         ProductDatabase.ProdEntry.TABLE_NAME,
                         values,
                         selection,
@@ -141,16 +137,10 @@ public class ProductActivity extends AppCompatActivity {
             TextView detail_product_price = (TextView) findViewById(R.id.detail_product_price);
 
             Product prod = getProductDetails(db, _id);
-
             String encodedBmp = prod.getImageLocation();
-            Log.v("Length of Stored BMP", "" + encodedBmp.length());
             try {
-                Log.v("String >> BMP", "");
                 Bitmap bmp = decodeBmpFromBase64(encodedBmp);
-                Log.v("BMP height is: ", "" + bmp.getHeight());
-                if (bmp != null) {
-                    detail_product_image.setImageBitmap(bmp);
-                }
+                detail_product_image.setImageBitmap(bmp);
             } catch (Exception e) {
                 Log.v("Image Exception", "" + e.toString());
             }

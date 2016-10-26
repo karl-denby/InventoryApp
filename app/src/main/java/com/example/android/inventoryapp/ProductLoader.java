@@ -5,15 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
 import java.util.ArrayList;
-import java.util.List;
 
-public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
+class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
-    // Variables
-    protected final String TAG = "ProductLoader";
-    SQLiteDatabase db;
-
-    public ProductLoader(Context ctx) {super(ctx);}
+    ProductLoader(Context ctx) {super(ctx);}
 
     @Override
     public ArrayList<Product> loadInBackground() {
@@ -33,7 +28,7 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
         // Get our Database object and loader
         ProductDatabaseHelper db_helper = new ProductDatabaseHelper(getContext());
-        db = db_helper.getWritableDatabase();
+        SQLiteDatabase db = db_helper.getWritableDatabase();
 
         // Read data from the DB and add it to listOfProducts
         Cursor c = db.query(
@@ -59,6 +54,7 @@ public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
             c.moveToNext();
         }
 
+        c.close();
         db.close();
         return listOfProducts;
     }

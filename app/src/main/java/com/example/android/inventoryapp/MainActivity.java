@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override public void onLoaderReset(Loader<ArrayList<Product>> param1) {
-        // todo: something
+        // No special actions
     }
 
     @Override

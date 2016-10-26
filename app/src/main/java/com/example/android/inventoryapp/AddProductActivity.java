@@ -26,7 +26,6 @@ public class AddProductActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_OPEN = 1;
     private int quantity = 1;
-    private final String TAG = "AddProductActivity";
     SQLiteDatabase db;
     String productImage = "";
 
@@ -92,15 +91,12 @@ public class AddProductActivity extends AppCompatActivity {
         final String MESSAGE = "Please add ";
         String missing_fields = "";
 
-        Log.v(TAG, edtProductName.getText().toString());
         if (edtProductName.getText().length() == 0) { missing_fields += ", Product";}
-        Log.v(TAG, edtPrice.getText().toString());
         if (edtPrice.getText().toString().length() == 0) { missing_fields += ", Price";}
-        Log.v(TAG, edtSupplier.getText().toString());
         if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
 
         if (missing_fields.length() != 0) {
-            // remove leading , and add a . to list of missing input fields
+            // Format error String by remove leading "," and add a "." to list of missing input fields
             missing_fields = missing_fields.substring(1, missing_fields.length());
             missing_fields += ".";
             Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
@@ -108,7 +104,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, REQUEST_IMAGE_OPEN);
@@ -116,6 +112,8 @@ public class AddProductActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final String LOG_TAG = "AddProductActivity";
+
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == RESULT_OK) {
             Uri fullPhotoUri = data.getData();
 
@@ -124,9 +122,8 @@ public class AddProductActivity extends AppCompatActivity {
             try {
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fullPhotoUri);
                 productImage = encodeBmpToBase64(bmp, Bitmap.CompressFormat.JPEG, 100);
-                Log.v("Length of Original BMP", "" + productImage.length());
             } catch (Exception e) {
-                Log.v("Problem with BMP", "" + e.toString());
+                Log.e(LOG_TAG, "" + e.toString());
             }
             Bitmap bmp = decodeBmpFromBase64(productImage);
             ivSelectedFile.setImageBitmap(bmp);
@@ -160,9 +157,8 @@ public class AddProductActivity extends AppCompatActivity {
         values.put(ProductDatabase.ProdEntry.COLUMN_IMAGE, productImage);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
-
-        Toast.makeText(AddProductActivity.this, "Added row " + newRowId, Toast.LENGTH_SHORT).show();
+        db.insert(ProductDatabase.ProdEntry.TABLE_NAME, null, values);
+        finish();
     }
 
     private static String encodeBmpToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {

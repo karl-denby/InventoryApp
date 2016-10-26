@@ -5,14 +5,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class ProductDatabaseHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 5;  // increment the version if scheme changes
+class ProductDatabaseHelper extends SQLiteOpenHelper {
+    private static final int DATABASE_VERSION = 5;  // increment the version if scheme changes
     // 1 = first creation
     // 2 = insert 1 record
     // 3 = rest of initial data set
     // 4 = pull id for later use
+    // 5 = strings for image storage
 
-    public static final String DATABASE_NAME = "Products.db";
+    private static final String DATABASE_NAME = "Products.db";
 
     // helper definitions
     private static final String TEXT_TYPE = " TEXT";
@@ -35,7 +36,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_TABLE_PRODUCTS =
             "DROP TABLE IF EXISTS " + ProductDatabase.ProdEntry.TABLE_NAME;
 
-    public ProductDatabaseHelper(Context context) {
+    ProductDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -44,7 +45,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         defaultData(db);
     }
 
-    public void defaultData(SQLiteDatabase db) {
+    private void defaultData(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(ProductDatabase.ProdEntry._ID, 1);
         values.put(ProductDatabase.ProdEntry.COLUMN_NAME, "Nexus 6p");
@@ -119,9 +120,4 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-/*
-    public void deleteDatabase(SQLiteDatabase db) {
-        db.execSQL(SQL_DELETE_TABLE_PRODUCTS);
-    }
-*/
 }
