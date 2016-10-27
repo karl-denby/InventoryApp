@@ -34,6 +34,7 @@ class ProductAdapter extends ArrayAdapter<Product> {
         tvProductName.setText(product.getName());
         tvQuantity.setText(String.valueOf(product.getQuantity()));
         tvPrice.setText(String.valueOf(product.getPrice()));
+        // TODO: Udacity want a button here to "Track a sale"
 
         // Put _id into tag so its easy to find later
         convertView.setTag(product.getId());

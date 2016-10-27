@@ -51,8 +51,9 @@ public class AddProductActivity extends AppCompatActivity {
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validateInput();
-                dataInsert();
+                if (validateInput() == Boolean.TRUE) {
+                    dataInsert();
+                }
             }
         });
 
@@ -83,24 +84,33 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    private void validateInput() {
+    private boolean validateInput() {
         EditText edtProductName = (EditText) findViewById(R.id.edtProductName);
         EditText edtPrice = (EditText) findViewById(R.id.edtPrice);
         EditText edtSupplier = (EditText) findViewById(R.id.edtSupplier);
+        TextView tvQuantity = (TextView) findViewById(R.id.tvQuantity);
+
+        Boolean result;
 
         final String MESSAGE = "Please add ";
         String missing_fields = "";
-
         if (edtProductName.getText().length() == 0) { missing_fields += ", Product";}
         if (edtPrice.getText().toString().length() == 0) { missing_fields += ", Price";}
         if (edtSupplier.getText().toString().length() == 0) { missing_fields += ", Supplier";}
+        if (tvQuantity.getText().toString().equals("0")) { missing_fields += ", Quantity";}
+        if (productImage.length() == 0) { missing_fields += ", Image";}
 
         if (missing_fields.length() != 0) {
             // Format error String by remove leading "," and add a "." to list of missing input fields
             missing_fields = missing_fields.substring(1, missing_fields.length());
             missing_fields += ".";
             Toast.makeText(AddProductActivity.this, MESSAGE + missing_fields, Toast.LENGTH_SHORT).show();
+            result = Boolean.FALSE;
+        } else {
+            result = Boolean.TRUE;
         }
+
+        return result;
     }
 
     private void selectImage() {
@@ -121,13 +131,30 @@ public class AddProductActivity extends AppCompatActivity {
 
             try {
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fullPhotoUri);
-                productImage = encodeBmpToBase64(bmp, Bitmap.CompressFormat.JPEG, 100);
+                productImage = compressBmpForSequel(bmp);
             } catch (Exception e) {
                 Log.e(LOG_TAG, "" + e.toString());
             }
             Bitmap bmp = decodeBmpFromBase64(productImage);
             ivSelectedFile.setImageBitmap(bmp);
         }
+    }
+
+    private String compressBmpForSequel(Bitmap bmp) {
+
+        final int maxSize = 2048000;
+        int quality = 96;
+
+        String result = encodeBmpToBase64(bmp, Bitmap.CompressFormat.JPEG, quality);
+        while (result.length() >= maxSize) {
+            quality = quality / 2;
+            result = encodeBmpToBase64(bmp, Bitmap.CompressFormat.JPEG, quality);
+        }
+
+        Log.v("BMP Size: ", "" + result.length());
+        Log.v("BMP Quality: ", "" + quality);
+
+        return result;
     }
 
     private static Bitmap decodeBmpFromBase64(String input) {
