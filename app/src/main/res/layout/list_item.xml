@@ -15,6 +15,7 @@
         android:textSize="24sp"
         tools:text="name" />
 
+
     <TextView
         android:id="@+id/tvQuantity"
         android:layout_width="0dp"
@@ -32,4 +33,11 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         tools:text="50" />
+
+    <Button
+        android:id="@+id/btnSellOne"
+        android:focusable="false"
+        android:layout_height="48dp"
+        android:layout_width="48dp" />
+
 </LinearLayout>
