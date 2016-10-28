@@ -29,6 +29,10 @@ public class Product {
         mImageLocation = imageLocation;
     }
 
+    public void setQuantity(int quantity) {
+        mQuantity = quantity;
+    }
+
     public int getId() {return mId;}
 
     public String getName() {return mName;}

@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(product_details);
             }
         });
-
     }
 
     @Override
